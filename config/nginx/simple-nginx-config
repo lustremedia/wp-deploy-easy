@@ -1,0 +1,26 @@
+# THIS IS A SIMPLE NGINX SAMPLE CONFIG FILE
+
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name NAME;
+
+    access_log /var/log/nginx/my_access.log;
+    error_log /var/log/nginx/my_error.log;
+
+    root /var/www/<YOUR DEPLOYMENT DIRECTORY>/current;
+    index index.php;
+
+    location / {
+        try_files $uri $uri/ /index.php?$args; 
+    }
+
+    location ~ \.php$ {
+        try_files $uri =404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_index index.php;
+        include fastcgi_params;
+    }
+}
