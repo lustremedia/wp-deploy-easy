@@ -30,3 +30,7 @@ git push -u origin master
 echo "Setting up development branch locally and pushing it remote\n"
 git checkout -b development
 git push -u origin development
+
+# Set correct wp dir and file settings locally TODO
+#find . -type d -exec chmod 755 {} \;  
+#find . -type f -exec chmod 644 {} \;
