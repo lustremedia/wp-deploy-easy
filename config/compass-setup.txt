@@ -1,0 +1,2 @@
+bundle exec compass create --bare --sass-dir "content/themes/<theme>/sass" --css-dir "content/themes/<theme>/css" --javascripts-dir "content/themes/<theme>/js" --images-dir "content/themes/<theme>/images"
+
