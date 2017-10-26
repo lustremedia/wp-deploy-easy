@@ -6,7 +6,7 @@ namespace :db do
 
   desc 'Create a sensible backup name for SQL files'
   task :backup_name do
-    on roles(:web) do
+    on roles(:db) do
 
       # Make a new directory in your shared folder
       execute :mkdir, "-p #{shared_path}/db_backups"
@@ -29,7 +29,7 @@ namespace :db do
 
   desc 'Confirms the database action before proceeeding'
   task :confirm do
-    on roles(:web) do
+    on roles(:db) do
       stage = fetch(:stage).to_s
 
       # Load the database details
@@ -38,17 +38,17 @@ namespace :db do
       # Set the confirmation message
       set :confirmed, proc {
         puts <<-WARN
-  \033[31m
-  ========================================================================
+              \033[31m
+              ========================================================================
 
-    WARNING: You're about to overwrite the database!
-    To continue, please enter the name of the database for this site.
+                WARNING: You're about to overwrite the database!
+                To continue, please enter the name of the database for this site.
 
-    Datebase name:\033[0m \033[1m \033[34m #{database['database']} \033[0m \033[22m \033[31m
+                Datebase name:\033[0m \033[1m \033[34m #{database['database']} \033[0m \033[22m \033[31m
 
-  ========================================================================
-  \033[0m
-        WARN
+              ========================================================================
+              \033[0m
+              WARN
 
         # Prompt the user to write out the database name
         ask :answer, database['database']
@@ -75,12 +75,12 @@ namespace :db do
       # Error message to show to user
       unless fetch(:confirmed)
         puts <<-WARN
-  \033[31m
-  ========================================================================
-    Sorry, you have entered the database name incorrectly too many times
-  ========================================================================
-  \033[0m
-        WARN
+              \033[31m
+              ========================================================================
+                Sorry, you have entered the database name incorrectly too many times
+              ========================================================================
+              \033[0m
+              WARN
         exit
       end
     end
@@ -134,9 +134,8 @@ namespace :db do
 
   desc 'Import the local database to your remote environment'
   task :push do
-    invoke 'db:confirm'
-
     invoke 'db:backup_name'
+    invoke 'db:confirm'
     on roles(:db) do
       run_locally do
         execute :mkdir, '-p db_backups'
@@ -157,5 +156,4 @@ namespace :db do
       end
     end
   end
-
 end
