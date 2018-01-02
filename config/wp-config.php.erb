@@ -6,7 +6,7 @@ define('DB_HOST', '<%= database['host'] %>');
 define('DB_CHARSET', 'utf8');
 define('DB_COLLATE', '');
 define('WPLANG', '');
-<% if stage == "development" || stage == "staging" %>
+<% if stage == "development" %>
 define('WP_DEBUG', true);
 <% end %>
 $table_prefix  = 'wp_';

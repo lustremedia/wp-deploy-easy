@@ -6,7 +6,7 @@ This is basically a hard fork of [wp-deploy by Mixd](https://github.com/Mixd/wp-
 
 - Templating support has been dropped (no .htaccess and robots.txt). Mostly because I am using NGINX and feel that robots.txt should not be part of the deployment process.
 - A local deployment with a ```development``` stage and ```capistrano-locally``` plugin has been introduced to mimic remote deployments locally.
-- ```wp-config.php.erb``` template files have been merged into one file and ```define('WP_DEBUG', true);``` will be introduced according to stage.
+- ```wp-config.php.erb``` template files have been merged into one file and ```define('WP_DEBUG', true);``` will be introduced only to development stage.
 - ```database.example.yml``` has been renamed to ```database.yml``` saving me a rename file step.
 - ```config/prepare.sh``` has been replaced by ```initialize.sh``` under the project root doing the hard lifting, combining all installation steps of wp-deploy in one file.
 
