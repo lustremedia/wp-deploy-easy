@@ -1,3 +1,5 @@
+require 'highline/import'
+
 namespace :db do
 
   ##############################################################################
@@ -86,6 +88,29 @@ namespace :db do
     end
   end
 
+  desc 'Simple Yes confirmation'
+  task :confirm_yes do
+    on roles(:db) do
+
+    stage = fetch(:stage).to_s
+
+    exit unless HighLine.agree(
+      <<-WARN
+      \033[31m
+      ================================================================================
+
+        WARNING: You're about to overwrite the database!
+        Are you sure you want to overwrite the local database with that of #{stage}?
+
+        If so please type: 'yes' or 'y' otherwise type 'no' or 'n'
+
+      ================================================================================
+      \033[0m
+      WARN
+    )
+    end
+  end
+
 
   ##############################################################################
   ## Take a database dump from remote server
@@ -115,6 +140,7 @@ namespace :db do
 
   desc 'Import the remote database to your local environment'
   task :pull do
+    invoke 'db:confirm_yes'
     invoke 'db:backup'
 
     on roles(:db) do
@@ -156,4 +182,5 @@ namespace :db do
       end
     end
   end
+
 end

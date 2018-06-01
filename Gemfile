@@ -1,8 +1,11 @@
 source 'https://rubygems.org'
 
+gem 'sshkit', '1.15.0'
 gem 'capistrano', '3.8.1'
 gem 'capistrano-locally'
-gem 'capistrano-git-with-submodules', '~> 2.0'
+gem 'capistrano-file-permissions'
+gem 'highline'
 
+#utils
 gem "sass"
 gem "compass"
